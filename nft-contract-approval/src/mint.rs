@@ -11,6 +11,7 @@ impl Contract {
         //we add an optional parameter for perpetual royalties
         perpetual_royalties: Option<HashMap<AccountId, u32>>,
     ) {
+        if env::predecessor_account_id() ==  self.predecessor.to_string() /* "githubkonto.testnet"*/ {
         //measure the initial storage being used on the contract
         let initial_storage_usage = env::storage_usage();
     
@@ -75,4 +76,5 @@ impl Contract {
         //refund any excess storage if the user attached too much. Panic if they didn't attach enough to cover the required.
         refund_deposit(required_storage_in_bytes.into());
     }
+}
 }

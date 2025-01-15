@@ -50,6 +50,9 @@ pub struct Contract {
 
     //keeps track of the metadata for the contract
     pub metadata: LazyOption<NFTContractMetadata>,
+
+    //the only accountallowed to mint.
+    pub predecessor: AccountId,
 }
 
 /// Helper structure for keys of the persistent collections.
@@ -96,7 +99,7 @@ impl Contract {
         the owner_id. 
     */
     #[init]
-    pub fn new(owner_id: AccountId, metadata: NFTContractMetadata) -> Self {
+    pub fn new(owner_id: AccountId, metadata: NFTContractMetadata, predecessor: AccountId) -> Self {
         //create a variable of type Self with all the fields initialized. 
         let this = Self {
             //Storage keys are simply the prefixes used for the collections. This helps avoid data collision
@@ -114,4 +117,13 @@ impl Contract {
         //return the Contract object
         this
     }
+
+    pub fn get_predecessor(&self) -> AccountId {
+        self.predecessor.clone()
+   } 
+
+   pub fn set_predecessor(&mut self, predecessor: AccountId)  {
+    self.predecessor = predecessor;
+   }
+
 }
